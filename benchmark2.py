@@ -1,40 +1,44 @@
 import time
 import os
+os.environ["FLAGS_prim_all"] = "true"
 import numpy as np
 import paddle
 from paddle import nn
-import paddleclas
-import ppdet
-import paddleseg
-import paddleocr.tools.program
-import paddleocr.ppocr.modeling.architectures
-import paddleocr.ppocr.utils.save_load
+# import paddleclas
+# import ppdet
+# import paddleseg
+# import paddleocr.tools.program
+# import paddleocr.ppocr.modeling.architectures
+# import paddleocr.ppocr.utils.save_load
 import paddlenlp
-import ppsci
+# import ppsci
 
 cinn_denied_ops = [
-    "arg_max",
-    "bitwise_and",
-    "concat",
-    "cumsum",
-    "gather",
-    "gather_nd",
-    "lookup_table_v2",
-    "reduce_sum",
-    "reduce_max",
-    "slice",
-    "strided_slice",
-    "roll",
-    "tile",
-    "transpose2",
-    "range",
-    "arange",
-    "fill_constant",
+    # "arg_max",
+    # "argmax",
+    # "bitwise_and",
+    # "concat",
+    # "cumsum",
+    # "gather",
+    # "gather_nd",
+    # "lookup_table_v2",
+    # "reduce_sum",
+    # "sum",          # PIR name for reduce_sum in Paddle 3.x
+    # "reduce_max",
+    # "max",          # PIR name for reduce_max in Paddle 3.x
+    # "slice",
+    # "strided_slice",
+    # "roll",
+    # "tile",
+    # "transpose2",
+    # "transpose",    # PIR name for transpose2 in Paddle 3.x
+    # "range",
+    # "arange",
+    # "fill_constant",
 ]
 
 paddle.set_flags({
-    "FLAGS_print_ir": True,
-    "FLAGS_prim_all": True,
+    "FLAGS_print_ir": False,
     "FLAGS_deny_cinn_ops": ";".join(cinn_denied_ops),
 })
 
@@ -806,12 +810,11 @@ if __name__ == "__main__":
     model.benchmark(use_cinn=True, repeat = 3,warmup = 1)
     
 # # PaddleOCR  PP-Structurev2
-    '''
+
     print("PP-Structurev2-vi-layoutxlm ...")
     model = TestViLayoutXLM(batch_size=1)
     model.benchmark(use_cinn=False, repeat = 3,warmup = 1)
     model.benchmark(use_cinn=True, repeat = 3,warmup = 1)
-    '''
     # cannot pass
     
     print("PP-Structurev2-layout ...")
@@ -828,7 +831,7 @@ if __name__ == "__main__":
     model.benchmark(use_cinn=True, repeat = 3,warmup = 1)
     
 # PaddleNLP
-    
+
     print("LSTM 1 ...")
     model = TestLSTM(batch_size=1)
     model.benchmark(use_cinn=False)
@@ -838,32 +841,29 @@ if __name__ == "__main__":
     model = TestGRU(batch_size=1)
     model.benchmark(use_cinn=False)
     model.benchmark(use_cinn=True)
-    
+
     print("Transformer-Ernie 1 ...")
     model = TestErnie(batch_size=1)
     model.benchmark(use_cinn=False, repeat = 3,warmup = 1)
     model.benchmark(use_cinn=True, repeat = 3,warmup = 1)
-    
+
     print("Bert-base-uncased 1 ...")
     model = TestBert(batch_size=1)
     model.benchmark(use_cinn=False, repeat = 3,warmup = 1)
     model.benchmark(use_cinn=True, repeat = 3,warmup = 1)
-    
-    #PaddleNLP large language
+    #PaddleNLP large language model
     #cannot pass
-    
+    '''
     print("llama2 ...")
     model = TestLlama2()
-    model.benchmark(use_cinn=False,repeat = 3,warmup = 1)
+    # model.benchmark(use_cinn=False,repeat = 3,warmup = 1)
     model.benchmark(use_cinn=True,repeat = 3,warmup = 1)
-    
+    '''
     #cannot pass
-    
     print("GPT-2 ...")
     model = TestGpt2()
-    model.benchmark(use_cinn=False,repeat = 3,warmup = 1)
+    # model.benchmark(use_cinn=False,repeat = 3,warmup = 1)
     model.benchmark(use_cinn=True,repeat = 3,warmup = 1)
-    
     
     # PaddleScience
     print("EulerBeam ...")
