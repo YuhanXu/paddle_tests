@@ -1,0 +1,15 @@
+{
+  "model": "bert",
+  "task": "sst2",
+  "cinn": true,
+  "total_steps": 6312,
+  "dev_acc": 0.9288990825688074,
+  "best_dev_acc": 0.9288990825688074,
+  "last_step_time_ms": 160.6130599975586,
+  "hp": {
+    "bs": 32,
+    "seq": 128,
+    "epochs": 3,
+    "lr": 2e-05
+  }
+}
