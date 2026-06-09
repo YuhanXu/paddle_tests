@@ -1,0 +1,3 @@
+model,task,cinn,total_steps,dev_metric_name,dev_metric,last_step_time_ms,wall_time_s
+bert,sst2,cinn,6312,dev_acc,0.9288990825688074,160.6130599975586,1162.0
+bert,sst2,nocinn,6312,dev_acc,0.9254587155963303,165.1008129119873,1122.9
